@@ -1,0 +1,223 @@
+﻿<h1 *ngIf="isAddMode">Add Student</h1>
+<h1 *ngIf="!isAddMode">Edit Student</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="form-group row">
+        <div class="form-group col-6">
+            <label>Name</label>
+            <input type="text" formControlName="name" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div *ngIf="f.name.errors.required">Name is required</div>
+            </div>
+        </div>
+
+
+        <div class="form-group col-3 pt-4 upload">
+            <input type="file" (change)="selectFile($event)" accept="image/jpeg, image/png, image/jpg"
+                class="form-control">
+            <img [src]="profileUrl" class="w-25 rounded-circle">
+        </div>
+
+
+    </div>
+
+
+    <div class="form-row">
+        <div class="form-group col-5">
+            <label>Age</label>
+            <input type="text" formControlName="age" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.age.errors }" />
+            <div *ngIf="submitted && f.age.errors" class="invalid-feedback">
+                <div *ngIf="f.age.errors.required">Age is required</div>
+            </div>
+
+        </div>
+
+        <div class="form-group col-3">
+            <label>Roll No</label>
+            <input type="number" formControlName="rollNo" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.rollNo.errors }" />
+            <div *ngIf="submitted && f.rollNo.errors" class="invalid-feedback">
+                <div *ngIf="f.rollNo.errors">Roll No is required</div>
+            </div>
+        </div>
+
+
+        <div class="form-group col-7">
+            <label>Email</label>
+            <input type="text" formControlName="email" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">Email is required</div>
+                <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col">
+            <label>Gender</label>
+            <select formControlName="gender" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.gender.errors }">
+                <option value=""></option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Others">Others</option>
+
+            </select>
+            <div *ngIf="submitted && f.gender.errors" class="invalid-feedback">
+                <div *ngIf="f.gender.errors.required">Gender is required</div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group col-7">
+            <label>Class</label>
+            <input type="text" formControlName="std" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.std.errors }" />
+            <div *ngIf="submitted && f.std.errors" class="invalid-feedback">
+                <div *ngIf="f.std.errors.required">Class is required</div>
+
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+
+
+    <!-- Parent's Detail Form -->
+    <h2>Parent Details Form</h2>
+    <ng-container *ngFor="let parentFormGroup of form.controls.parents['controls']; let i = index">
+        <div [formGroup]="parentFormGroup">
+            <div class="form-group row">
+                <div class="form-group col-5">
+                    <label>Parent Name</label>
+                    <input type="text" formControlName="parentName" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f?.parentName?.errors }" />
+                    <div *ngIf="submitted && f?.parentName?.errors" class="invalid-feedback">
+                        <div *ngIf="f.parentName.errors.required">Parent Name is required</div>
+                    </div>
+                </div>
+
+
+                <div class="form-group col-4 mt-4">
+                    <input type="file" (change)="selectFileParent($event, parentFormGroup)" accept="image/jpeg, image/png, image/jpg"
+                        class="form-control">
+                </div>
+                <div class="form-group col-3" *ngIf="parentFormGroup.get('parentProfileUrl').value">
+                    <img [src]="parentFormGroup.get('parentProfileUrl').value" class="w-50 rounded-circle">
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <div class="form-group col-5">
+                    <label>Parent Age</label>
+                    <input type="text" formControlName="parentAge" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f?.parentAge?.errors }" />
+                    <div *ngIf="submitted && f?.parentAge?.errors" class="invalid-feedback">
+                        <div *ngIf="f?.parentAge?.errors?.required">Parent's Age is required</div>
+                    </div>
+                </div>
+
+                <div class="form-group col-7">
+                    <label>Parent Email</label>
+                    <input type="text" formControlName="parentEmail" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f?.parentEmail?.errors }" />
+                    <div *ngIf="submitted && f?.parentEmail?.errors" class="invalid-feedback">
+                        <div *ngIf="f?.parentEmail?.errors.required">Parent's Email is required</div>
+                        <div *ngIf="f?.parentEmail?.errors.email">Parent's Email must be a valid email address</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="form-group col">
+                    <label>Gender</label>
+                    <select formControlName="parentGender" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f?.parentGender?.errors }">
+                        <option value=""></option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Others">Others</option>
+
+                    </select>
+                    <div *ngIf="submitted && f?.parentGender?.errors" class="invalid-feedback">
+                        <div *ngIf="f?.parentGender?.errors.required">Parent's Gender is required</div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group col">
+                    <label>Relation</label>
+                    <input type="text" formControlName="relation" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f?.relation?.errors }" />
+                    <div *ngIf="submitted && f?.relation?.errors" class="invalid-feedback">
+                        <div *ngIf="f?.relation?.errors.required">Parent Relation is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div formGroupName="parentAddress">
+                <div class="form-group row">
+                    <div class="form-group col-6">
+                        <label>Street</label>
+                        <input type="text" formControlName="parentStreet" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f?.parentStreet?.errors }" />
+                        <div *ngIf="submitted && f?.parentStreet?.errors" class="invalid-feedback">
+                            <div *ngIf="f?.parentStreet?.errors.required">Parent Street is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-6">
+                        <label>City</label>
+                        <input type="text" formControlName="parentCity" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f?.parentCity?.errors }" />
+                        <div *ngIf="submitted && f?.parentCity?.errors" class="invalid-feedback">
+                            <div *ngIf="f?.parentCity?.errors.required">Parent City is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="form-group col-6">
+                        <label>State</label>
+                        <input type="text" formControlName="parentState" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f?.parentState?.errors }" />
+                        <div *ngIf="submitted && f?.parentState?.errors" class="invalid-feedback">
+                            <div *ngIf="f?.parentState?.errors.required">State is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-6">
+                        <label>Zip Code</label>
+                        <input type="text" formControlName="parentZipCode" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f?.parentZipCode?.errors }" />
+                        <div *ngIf="submitted && f?.parentZipCode?.errors" class="invalid-feedback">
+                            <div *ngIf="f?.parentZipCode?.errors.required">ZipCode is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </ng-container>
+
+    <div class="btn btn-success" (click)="addFormControl()">Add Parent</div>&nbsp;
+    <div class="btn btn-danger" (click)="removeFormControl(i)">Remove Parent</div><br>
+    <br>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-info">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save
+        </button>
+        <a routerLink="/users" class="btn btn-link">Cancel</a>
+    </div>
+
+</form>
